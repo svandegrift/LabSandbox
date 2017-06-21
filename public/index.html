@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lab Sandbox</title>
+</head>
+<body>
+    <h1>Lab Sandbox page</h1>
+      Enter your name: <input type="text" id="name"><br />
+      <br />
+      <br />
+      <button onclick="pressed()">Enter</button>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io.connect();
+      function pressed(buttonPressed){
+        socket.emit('pushed',"button was pushed");
+        var Username = document.getElementById("name").value;
+        socket.emit("name", Username);
+        console.log(Username, " was sent");
+        document.getElementById("name").value = "";
+      };
+      socket.on('notify',function(data){
+        console.log(data);
+      });
+    </script>
+
+</body>
+</html>
